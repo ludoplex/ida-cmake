@@ -37,13 +37,13 @@ def get_build_cmd():
     return {'posix': 'make', 'nt': 'MSBuild'}[os.name]
 
 def get_cmake_gen(target_version):
-    if os.name == 'posix':
-        return 'Unix Makefiles'
-    elif os.name == 'nt':
+    if os.name == 'nt':
         gen = 'Visual Studio ' + (
             '10' if target_version[0] <= 6 and target_version[1] <= 8 else '14'
         )
-        return (gen + ' Win64') if target_version >= (7, 0) else gen
+        return f'{gen} Win64' if target_version >= (7, 0) else gen
+    elif os.name == 'posix':
+        return 'Unix Makefiles'
     else:
         assert False
 
